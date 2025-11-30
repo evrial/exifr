@@ -41,6 +41,11 @@ export class FsReader extends ChunkedReader {
 		return chunk
 	}
 
+	// NEW: Enables automatic closure for modern JS usage
+	async [Symbol.asyncDispose]() {
+  		await this.close();
+	}
+
 	// TODO: auto close file handle when reading and parsing is over
 	// (app can read more chunks after parsing the first)
 	async close() {
