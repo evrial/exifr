@@ -24,7 +24,7 @@ export class FsReader extends ChunkedReader {
 
 	async open() {
 		if (this.fh === undefined) {
-			// ✅ The Root Cause Fix: Check if the input is a FileHandle object
+			// The Root Cause Fix: Check if the input is a FileHandle object
 			// (This is the change that allows the user to pass a pre-opened handle)
 			if (this.input && typeof this.input === 'object' && typeof this.input.close === 'function' && typeof this.input.read === 'function') {
 				this.fh = this.input
@@ -46,11 +46,6 @@ export class FsReader extends ChunkedReader {
 		var chunk = this.subarray(offset, length, true)
 		await this.fh.read(chunk.dataView, 0, length, offset)
 		return chunk
-	}
-
-	// NEW: Enables automatic closure for modern JS usage
-	async [Symbol.asyncDispose]() {
-  		await this.close();
 	}
 
 	// TODO: auto close file handle when reading and parsing is over
