@@ -43,7 +43,7 @@
     "build-lite": "rollup -c rollup.config.js lite",
     "build-full": "rollup -c rollup.config.js full",
     "build": "rollup -c rollup.config.js",
-    "prepare": "npm run build",
+    "prerelease": "npm run build",
     "prepack": "npm run build"
   },
   "devDependencies": {
