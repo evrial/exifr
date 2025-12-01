@@ -24,8 +24,15 @@ export class FsReader extends ChunkedReader {
 
 	async open() {
 		if (this.fh === undefined) {
-			this.fh = await this.fs.open(this.input, 'r')
-			this.size = (await this.fh.stat(this.input)).size
+			// ✅ The Root Cause Fix: Check if the input is a FileHandle object
+			// (This is the change that allows the user to pass a pre-opened handle)
+			if (this.input && typeof this.input === 'object' && typeof this.input.close === 'function' && typeof this.input.read === 'function') {
+				this.fh = this.input
+			} else {
+				// Input is still a string path, open it normally
+				this.fh = await this.fs.open(this.input, 'r')
+			}
+			this.size = (await this.fh.stat()).size
 		}
 	}
 
