@@ -24,6 +24,9 @@
   ],
   "homepage": "https://mutiny.cz/exifr/",
   "bugs": "https://github.com/MikeKovarik/exifr/issues",
+  "overrides": {
+    "rollup": "2.79.2"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/MikeKovarik/exifr.git"
